@@ -266,3 +266,12 @@ color: #3D3D3D;
 	color: black;
 	margin-bottom:50px;
 }
+
+#feedback {
+	display:none;
+	color:red;
+	font-weight: bold;
+	font-size:30px;
+	margin-top:-5px;
+	margin-bottom:20px;
+}

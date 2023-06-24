@@ -29,8 +29,10 @@ formLogin.addEventListener("submit", function(e){
     }
     else {
         console.log('Erreur dans l’identifiant ou le mot de passe');
+        feedback.innerText = "utilisateur non reconnue!";
+        feedback.style.display = "block" ; 
       }
-})
+      })
 
     .then(data => {
       
@@ -40,7 +42,6 @@ formLogin.addEventListener("submit", function(e){
       })
     
     .catch(error => {
-        alert(error.message);
         console.error(error);
       });
     })
