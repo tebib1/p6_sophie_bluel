@@ -40,3 +40,41 @@ gallery.appendChild(figureProject);
 
 
 
+/* la partie filtrer 
+
+fetch("http://localhost:5678/api/categories") 
+
+.then((response) => {
+   if (response.ok) {
+       return response.json();
+   } else {
+       console.log("Erreur");
+   }
+})
+
+.then((category) => {
+  
+    console.log(category)
+
+    category.forEach((trie) => {
+
+        const trieparcategory= await response.json();
+        trieparcategory.unshift({ id: 0, name: 'Tous' });
+        
+        let creationbouttoncattegory = trieparcategory.map( indexcategory => {
+            return "<button class=filterbtn data-id=${indexCategory.id}>${indexCategory.name}</button>";
+        }) ;
+
+         let choisirparcategory = trieparcategory.map(indexcategory => {
+            if (indexCategory.id === 0) {
+                return `<option value=${indexCategory.id}></option>`
+            } else {
+                return `<option value=${indexCategory.id}> ${indexCategory.name}</option>`;
+            }};
+            document.querySelector("#filter").innerHTML = createButtonCategory.join('');
+
+            )
+    }) 
+}
+)
+*/

@@ -56,7 +56,7 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 80px 0px;
 }
 section {
 	margin: 50px 0
@@ -68,7 +68,7 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 
 h1 > span {
@@ -274,4 +274,120 @@ color: #3D3D3D;
 	font-size:30px;
 	margin-top:-5px;
 	margin-bottom:20px;
+}
+
+/*modale */
+
+#barre_utilisateur {
+	display: flex;
+    justify-content: center;
+    background-color: black;
+    padding: 10px;
+    gap: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+#barre_utilisateur .edition {
+	color:white;
+	background-color:black;
+	border:none;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	gap:10px;
+	font-family: Work Sans;
+font-size: 14px;
+font-weight: 500;
+line-height: 16px;
+letter-spacing: 0em;
+text-align: center;
+
+}
+#barre_utilisateur .changements 
+{
+	color:black;
+	background-color:white;
+	border-radius:25px;
+	padding:8px;
+	font-family: Work Sans;
+ font-size: 14px;
+font-weight: 500;
+line-height: 16px;
+letter-spacing: 0em;
+text-align: center;
+
+} 
+
+#modal {
+	width:630px; 
+   height:730px;
+   border-radius:10px;
+  width: 95%;
+  max-width: 500px;
+  min-width: 300px;
+  padding: 30px;
+  background: #fff;
+  border-radius: 5px;
+  position: absolute;
+	  top: 80%;
+  left:35%;
+}
+#modal h2 {
+	font-family: Work Sans;
+font-size: 26px;
+font-weight: 400;
+line-height: 30px;
+letter-spacing: 0em;
+text-align: center;
+color: rgba(0, 0, 0, 1);
+}
+
+.overlay {
+  width:100vw;
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ position: fixed;
+ top:0vw;
+ left:0vh;
+  background: #333333d3;
+}
+
+.close-modal {
+	display:flex;
+	margin-left:490px;
+	border:none;
+	background:white;
+	font-size:15px;
+   }
+   #contenu_modal {
+	display:none;
+}
+
+#contenu_modal.active
+{
+	display:block;
+}
+
+.align_btn {
+	display:flex;
+	width:100%;
+	justify-content:center;
+	gap:15px;
+}
+.modifier_galleri {
+	border:none;
+	background-color:white;
+	display:flex;
+  margin-top:10px;
+	gap:5px;
+}
+
+#introduction .modifier_galleri {
+	margin-left:51px;
+	margin-top:15px;
 }
