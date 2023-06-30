@@ -4,16 +4,16 @@ const inputconnexion = document.querySelector(".btnconnection");
 
 const formLogin = document.querySelector("#formLogin");
 
-formLogin.addEventListener("submit", function(e){
+formLogin.addEventListener("submit", function (e) {
 
-  e.preventDefault(); 
+  e.preventDefault();
 
-    const body = {
-      email: inputemail.value,
-      password: inputpassword.value
-    };
+  const body = {
+    email: inputemail.value,
+    password: inputpassword.value
+  };
 
-    fetch("http://localhost:5678/api/users/login", {
+  fetch("http://localhost:5678/api/users/login", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -21,27 +21,27 @@ formLogin.addEventListener("submit", function(e){
     body: JSON.stringify(body)
   })
 
-.then (response => {
+    .then(response => {
 
-  console.log(response)
-    if (response.ok) {
-      return response.json();
-    }
-    else {
+      console.log(response)
+      if (response.ok) {
+        return response.json();
+      }
+      else {
         console.log('Erreur dans l’identifiant ou le mot de passe');
         feedback.innerText = "utilisateur non reconnue!";
-        feedback.style.display = "block" ; 
+        feedback.style.display = "block";
       }
-      })
+    })
 
     .then(data => {
-      
+
       console.log(data)
-        localStorage.setItem("token", data.token);
-        window.location.href="index.html"
-      })
-    
-    .catch(error => {
-        console.error(error);
-      });
+      localStorage.setItem("token", data.token);
+      window.location.href = "index.html"
     })
+
+    .catch(error => {
+      console.error(error);
+    });
+})

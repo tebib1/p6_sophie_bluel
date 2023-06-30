@@ -11,10 +11,7 @@
 		rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script
-      src="https://kit.fontawesome.com/ab56c9c6ec.js"
-      crossorigin="anonymous"
-    ></script>
+	<script src="https://kit.fontawesome.com/ab56c9c6ec.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -29,19 +26,18 @@
 	</div>
 	<section id="contenu_modal">
 		<div class="overlay"></div>
-	<div id="modal">
-		<button aria-label="close modal"
-        class="close-modal modal-trigger">X</button>
-		<h2>Galerie photo </h2>
+		<div id="modal">
+			<button aria-label="close modal" class="close-modal modal-trigger">X</button>
+			<h2>Galerie photo </h2>
 	</section>
-</div>
+	</div>
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 		<nav>
 			<ul>
-				
-				<li>projets</li>
-				<li>contact</li>
+
+				<li><a href="#"> projets </a></li>
+				<li><a href="#contact"> contact </a></li>
 				<li> <a href="login.html"> login </a> </li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
@@ -66,10 +62,12 @@
 		</section>
 		<section id="portfolio">
 			<div class="align_btn">
-			<h2>Mes Projets</h2>
-			<button class="modifier_galleri"> <i class="fa-solid fa-pen-to-square"></i> modifier</button>
-		</div>
-			<div id="filter"></div>
+				<h2>Mes Projets</h2>
+				<button class="modifier_galleri"> <i class="fa-solid fa-pen-to-square"></i> modifier</button>
+			</div>
+			<div id="filters" class="filtres">
+				<button class="is-active btn_filter">Tous</button>
+			</div>
 			<div class="gallery"></div>
 		</section>
 		<section id="contact">
