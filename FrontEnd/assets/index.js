@@ -1,8 +1,8 @@
 // Get nav Filters
 const filters = document.querySelector("#filters");
 const gallery = document.querySelector(".gallery");
-
-
+const modalContainer = document.querySelector(".contenu_modal");
+const modalTriggers = document.querySelectorAll(".modal-trigger");
 
 async function main() {
 
@@ -113,7 +113,7 @@ function createProject(project) {
     figureProject.setAttribute("data-tag", project.category.name);
     figureProject.setAttribute("data-id", project.id);
 
-    const imageProject = document.createElement("img");
+    const imageProject = document.createElement("img");  
     imageProject.src = project.imageUrl;
     imageProject.alt = project.title;
 
@@ -126,3 +126,11 @@ function createProject(project) {
     figureProject.appendChild(figcaptionProject);
     gallery.appendChild(figureProject);
 };
+
+/*partie modal */
+
+modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
+
+function toggleModal(){
+  modalContainer.classList.toggle("active")
+}

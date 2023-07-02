@@ -24,13 +24,21 @@
 			publier les changements
 		</button>
 	</div>
-	<section id="contenu_modal">
-		<div class="overlay"></div>
+	<section id="contenu_modal" class="contenu_modal">
+		<div class="overlay modal-trigger"></div>
 		<div id="modal">
 			<button aria-label="close modal" class="close-modal modal-trigger">X</button>
-			<h2>Galerie photo </h2>
+			<div class="align_modal">
+				<h2>Galerie photo </h2>
+				
+				<div class="contenu_btn_modal">
+					<hr class="bar">
+					<button class="ajoutphoto">Ajouter une photo</button>
+					<button class="supprimerphoto">Supprimer la galerie</button>
+				</div>
+			</div>
+		</div>
 	</section>
-	</div>
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 		<nav>
@@ -47,7 +55,7 @@
 		<section id="introduction">
 			<figure>
 				<img src="./assets/images/sophie-bluel.png" alt="">
-				<button class="modifier_galleri"> <i class="fa-solid fa-pen-to-square"></i> modifier</button>
+				<button class="btn_modal"> <i class="fa-solid fa-pen-to-square"></i> modifier</button>
 			</figure>
 			<article>
 				<h2>Designer d'espace</h2>
@@ -63,7 +71,7 @@
 		<section id="portfolio">
 			<div class="align_btn">
 				<h2>Mes Projets</h2>
-				<button class="modifier_galleri"> <i class="fa-solid fa-pen-to-square"></i> modifier</button>
+				<button class="btn_modal modal-trigger"> <i class="fa-solid fa-pen-to-square"></i> modifier</button>
 			</div>
 			<div id="filters" class="filtres">
 				<button class="is-active btn_filter">Tous</button>
