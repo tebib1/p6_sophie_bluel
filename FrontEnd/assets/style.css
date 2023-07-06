@@ -565,3 +565,12 @@ line-height: 17px;
 letter-spacing: 0em;
 text-align: center;
 }
+
+.contenu-modal2 {
+	display: none;
+	
+}
+
+.contenu-modal2.active {
+	display:block;
+}

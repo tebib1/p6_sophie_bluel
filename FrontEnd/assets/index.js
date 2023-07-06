@@ -1,8 +1,10 @@
 // Get nav Filters
 const filters = document.querySelector("#filters");
 const gallery = document.querySelector(".gallery");
-const modalContainer = document.querySelector(".contenu_modal");
+const modalContainer1 = document.querySelector(".contenu_modal");
 const modalTriggers = document.querySelectorAll(".modal-trigger");
+const modalContainer2 = document.querySelector(".contenu-modal2");
+const modalTriggers2 = document.querySelectorAll(".modal-trigger2");
 
 async function main() {
 
@@ -127,10 +129,31 @@ function createProject(project) {
     gallery.appendChild(figureProject);
 };
 
+// fonction pour créer les elements de premier Modal //
+function creategaleriemodal(modal) {
+    const figuremodal = document.createElement("article")
+    figuremodal.setAttribute("data-tag", project.category.name);
+    figuremodal.setAttribute("data-id", project.id);
+
+    const imagemodal = document.createElement("img");
+    imagemodal.src = modal.imageUrl;
+    imagemodal.alt = modal.title;
+}
+
 /*partie modal */
 
 modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 
 function toggleModal(){
-  modalContainer.classList.toggle("active")
+  modalContainer1.classList.toggle("active")
+}
+
+//modalTriggers,addEventListener("click",creategaleriemodal){}//
+
+;
+
+modalTriggers2.forEach(trigger2 => trigger2.addEventListener("click", toggleModal2))
+
+function toggleModal2(){
+  modalContainer2.classList.toggle("active")
 }
