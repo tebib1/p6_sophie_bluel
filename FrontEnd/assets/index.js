@@ -1,6 +1,9 @@
+
 // Get nav Filters
 const filters = document.querySelector("#filters");
 const gallery = document.querySelector(".gallery");
+const galleryModale = document.querySelector(".galleryModale");
+
 const modalContainer1 = document.querySelector(".contenu_modal");
 const modalTriggers = document.querySelectorAll(".modal-trigger");
 const modalContainer2 = document.querySelector(".contenu-modal2");
@@ -36,8 +39,9 @@ async function getWorks(categoryId) {
 
             projects.forEach((project) => {
                 if (categoryId == project.category.id || categoryId == null) {
-                    createProject(project);
+                    createProject(project);                   
                 }
+                createProjectModal(project);
 
             });
         })
@@ -130,14 +134,30 @@ function createProject(project) {
 };
 
 // fonction pour créer les elements de premier Modal //
-function creategaleriemodal(modal) {
-    const figuremodal = document.createElement("article")
-    figuremodal.setAttribute("data-tag", project.category.name);
-    figuremodal.setAttribute("data-id", project.id);
+function createProjectModal(project) {
+    const figureModalProject = document.createElement("figure");
+    figureModalProject.setAttribute("data-id", project.id);
 
-    const imagemodal = document.createElement("img");
-    imagemodal.src = modal.imageUrl;
-    imagemodal.alt = modal.title;
+    const imageModalProject = document.createElement("img");
+    imageModalProject.src = project.imageUrl;
+    imageModalProject.alt = project.title;
+    imageModalProject.classList.add("modal-project-img");
+
+    const trashIcon = document.createElement("img");
+    trashIcon.src = "assets/icons/trash-icon.svg";
+    trashIcon.classList.add("trash-icon");
+    trashIcon.setAttribute("data-id", project.id);
+    let trashIconID = trashIcon.getAttribute("data-id");
+
+
+    const figcaptionModalProject = document.createElement("figcaption");
+    figcaptionModalProject.innerText = "éditer";
+
+    figureModalProject.appendChild(imageModalProject);
+    figureModalProject.appendChild(trashIcon);
+    //figureModalProject.appendChild(moveIcon);
+    figureModalProject.appendChild(figcaptionModalProject);
+    galleryModale.appendChild(figureModalProject);
 }
 
 /*partie modal */
@@ -147,9 +167,6 @@ modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 function toggleModal(){
   modalContainer1.classList.toggle("active")
 }
-
-//modalTriggers,addEventListener("click",creategaleriemodal){}//
-
 ;
 
 modalTriggers2.forEach(trigger2 => trigger2.addEventListener("click", toggleModal2))
