@@ -7,7 +7,9 @@ const galleryModale = document.querySelector(".galleryModale");
 const modalContainer1 = document.querySelector(".contenu_modal");
 const modalTriggers = document.querySelectorAll(".modal-trigger");
 const modalContainer2 = document.querySelector(".contenu-modal2");
+const btnajoutphoto = document.querySelector(".ajoutphoto");
 const modalTriggers2 = document.querySelectorAll(".modal-trigger2");
+const boutonRetourner=document.querySelector(".retourner");
 
 async function main() {
 
@@ -169,8 +171,25 @@ function toggleModal(){
 }
 ;
 
-modalTriggers2.forEach(trigger2 => trigger2.addEventListener("click", toggleModal2))
+btnajoutphoto.addEventListener("click", function(){
+    modalContainer1.style.display = "none";
+    modalContainer2.style.display = "block";
+});
 
-function toggleModal2(){
-  modalContainer2.classList.toggle("active")
-}
+// Fonction pour fermer la modal
+
+function closeModal() {
+    modalContainer2.style.display  = "none";
+  }
+
+  // Événement de clic sur le bouton de fermeture
+  modalTriggers2.forEach(close=>close.addEventListener("click",closeModal));
+
+  // Ajouter un gestionnaire d'événements au bouton "Retourner"
+boutonRetourner.addEventListener('click', function() {
+    // Cacher le second modal
+    modalContainer2.style.display = 'none';
+  
+    // Afficher le premier modal
+    modalContainer1.style.display = 'block';
+  });
