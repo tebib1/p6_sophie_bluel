@@ -10,11 +10,13 @@ const modalContainer2 = document.querySelector(".contenu-modal2");
 const btnajoutphoto = document.querySelector(".ajoutphoto");
 const modalTriggers2 = document.querySelectorAll(".modal-trigger2");
 const boutonRetourner=document.querySelector(".retourner");
+const boutonsupprimer=document.querySelector(".supprimerphoto")
 
 async function main() {
 
     await getWorks();
     await getCategories();
+    await admin();
 }
 
 main();
@@ -51,6 +53,26 @@ async function getWorks(categoryId) {
             console.log(error);
         });
 }
+
+async function admin() {
+    // On récupère le token
+    const token = window.localStorage.getItem("token");
+    if (token !== null) {
+
+        //on récupère tous les éléments admin
+        const elementsAdmin = document.querySelectorAll(".hiddenAdmin");
+
+        //on enlève, pour chaque bouton la classe is-active
+        elementsAdmin.forEach((elementAdmin) => elementAdmin.classList.remove("hiddenAdmin"));
+
+        filters.classList.add("hiddenAdmin");
+
+        
+    }
+
+}
+
+
 
 
 // la partie filtrer 
@@ -193,3 +215,6 @@ boutonRetourner.addEventListener('click', function() {
     // Afficher le premier modal
     modalContainer1.style.display = 'block';
   });
+
+  // Evénement de clic sur le bouton supprimer 
+
