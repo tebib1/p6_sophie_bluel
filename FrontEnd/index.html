@@ -58,10 +58,10 @@
 			<form id="photoForm" enctype="multipart/form-data">
 				<div class="ajout_fichier">
 					<img src="assets/icons/img-icon.svg" alt="icon_img">
-					<!--<input id="fileInput" type="file" name="photo" accept="image/*">-->
 					<div class="contenu_btn_form">
-						<button type="submit">+ Ajouter photo</button>
-						<p class="text-label">jpg, png : 4mo max</p>
+					<label for="image" class="photo-upload-button"> + Ajouter photo</label>
+<input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" />
+<p class="type-files">jpg, png : 4mo max</p>
 					</div>
 				</div>
 				<label class="text-css" for="title">Titre</label>
