@@ -1,3 +1,4 @@
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -696,16 +697,6 @@ justify-content:center;
 	border:none;
 }
 
-.ajout_fichier button {
-	background: rgba(232, 241, 246, 1);
-border:nonE;
-	width: 173px;
-height: 36px;
-top: 881px;
-left: 633px;
-border-radius: 50px;
-	background: rgba(203, 214, 220, 1);
-}
 .contenu_btn_form {
 	display:flex;
 	flex-direction:column;
@@ -732,4 +723,47 @@ a{
 
 .hiddenAdmin{
 	display: none!important;
+}
+
+#image {
+	background: rgba(232, 241, 246, 1);
+border:none;
+	width:0px;
+height: 36px;
+border-radius: 50px;
+	
+	}
+.photo-upload-button {
+	position:relative;
+	bottom:-27px;
+	width: 173px;
+height: 36px;
+border-radius: 50px;
+	background: rgba(203, 214, 220, 1);
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	font-family: Work Sans;
+font-size: 14px;
+font-weight: 500;
+line-height: 16px;
+letter-spacing: 0em;
+text-align: center;
+color: rgba(48, 102, 133, 1);
+
+}
+.type-files{
+	font-family: Work Sans;
+font-size: 10px;
+font-weight: 400;
+line-height: 12px;
+letter-spacing: 0em;
+text-align: center;
+ position:absolute;
+	bottom:390px;
+}
+.ajout_fichier img {
+	position:relative;
+	bottom:-25px;
+	
 }
