@@ -10,7 +10,7 @@ const modalContainer2 = document.querySelector(".contenu-modal2");
 const btnajoutphoto = document.querySelector(".ajoutphoto");
 const modalTriggers2 = document.querySelectorAll(".modal-trigger2");
 const boutonRetourner=document.querySelector(".retourner");
-const boutonsupprimer=document.querySelector(".supprimerphoto")
+const boutonsupprimer=document.querySelector(".supprimerphoto");
 
 async function main() {
 
@@ -217,4 +217,24 @@ boutonRetourner.addEventListener('click', function() {
   });
 
   // Evénement de clic sur le bouton supprimer 
+  boutonsupprimer.addEventListener('click', deleteElement ());
+ 
 
+//function pour supprimer les elements de l'API//
+
+function deleteElement(project){
+    fetch("http://localhost:5678/api/works/${id}",{
+        method: 'DELETE'
+      })
+
+.then((response) => {
+            if (response.ok) {
+               console.log ("L'élément a été supprimé avec succès")
+            } else {
+                console.log(" Gérez l'erreur en cas de problème lors de la suppression");
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
