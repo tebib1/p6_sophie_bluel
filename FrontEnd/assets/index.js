@@ -12,6 +12,7 @@ const modalTriggers2 = document.querySelectorAll(".modal-trigger2");
 const boutonRetourner=document.querySelector(".retourner");
 const boutonsupprimer=document.querySelector(".supprimerphoto");
 
+
 async function main() {
 
     await getWorks();
@@ -122,6 +123,8 @@ async function getCategories() {
                 });
             });
         })
+
+       
         .catch((error) => {
             console.log(error);
         });
@@ -183,7 +186,6 @@ function createProjectModal(project) {
     figureModalProject.appendChild(figcaptionModalProject);
     galleryModale.appendChild(figureModalProject);
 }
-
 /*partie modal */
 
 modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
@@ -238,3 +240,72 @@ function deleteElement(project){
             console.log(error);
         });
 }
+
+/*ajout photo 
+ // Fonction exécutée lorsque le formulaire est soumis
+ function handleFormSubmit(event) {
+    event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+    // Récupérer l'élément input qui contient la photo
+    const photoInput = document.getElementById('image');
+    
+    // Vérifier si une photo a été sélectionnée
+    if (photoInput.files.length > 0) {
+        const file = photoInput.files[0]; // Récupérer le fichier photo
+        
+        // Vous pouvez ici envoyer le fichier photo au serveur ou effectuer d'autres traitements
+        // Par exemple, utiliser AJAX pour envoyer le fichier au serveur
+        
+        console.log('Photo sélectionnée:', file.name);
+    } else {
+        console.log('Aucune photo sélectionnée.');
+    }
+}
+
+// Ajouter un gestionnaire d'événement sur le formulaire pour détecter quand il est soumis
+const uploadForm = document.getElementById('photoForm');
+uploadForm.addEventListener('submit', handleFormSubmit);*/
+
+document.getElementById("photoForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêche le rechargement de la page par défaut
+    uploadPhoto();
+  });
+
+  function uploadPhoto() {
+    const photoInput = document.getElementById("image");
+    const file = photoInput.files[0];
+
+    if (!file) {
+      alert("Veuillez sélectionner une photo.");
+      return;
+    }
+
+    // Créer un objet FormData pour envoyer le fichier
+    const formData = new FormData();
+    formData.append("photo", file);
+
+    
+    const uploadUrl = "http://localhost:5678/api/works";
+
+    // Envoi de la photo via la requête Fetch
+    fetch(uploadUrl, {
+      method: "POST",
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Traitez la réponse du serveur ici si nécessaire
+        console.log("Réponse du serveur :", data);
+        alert("La photo a été envoyée avec succès !");
+      })
+      .catch(error => {
+        console.error("Erreur lors de l'envoi de la photo :", error);
+        alert("Une erreur s'est produite lors de l'envoi de la photo.");
+      });
+  }
+
+  /*afficher les categories */
+
+   // Fonction pour afficher les catégories dans le document
+   function displayCategories(categories) {
+    const categoriesContainer = document.getElementById("category");}
