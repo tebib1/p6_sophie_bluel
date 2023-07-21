@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -67,7 +68,10 @@
 				<label class="text-css" for="title">Titre</label>
 				<input type="text" name="title" id="title" required />
 				<label class="text-css" for="category">Categorie</label>
-				<select type="select" name="category" id="category" required></select>
+				<select type="select" name="category" id="category" required>
+					<option value="">veuillez sélectionner une catégorie</option>
+
+				</select>
 				<hr />
 				<input class="btn-submit" type="submit" value="valider" />
 			</form>
@@ -80,7 +84,7 @@
 
 				<li><a href="#"> projets </a></li>
 				<li><a href="#contact"> contact </a></li>
-				<li> <a href="login.html"> login </a> </li>
+				<li> <a class="login" href="login.html"> login </a> </li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
