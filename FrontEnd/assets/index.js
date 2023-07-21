@@ -1,6 +1,9 @@
 
 // Get nav Filters
 const filters = document.querySelector("#filters");
+const optionsSelect = document.querySelector("#category");
+
+
 const gallery = document.querySelector(".gallery");
 const galleryModale = document.querySelector(".galleryModale");
 
@@ -9,8 +12,8 @@ const modalTriggers = document.querySelectorAll(".modal-trigger");
 const modalContainer2 = document.querySelector(".contenu-modal2");
 const btnajoutphoto = document.querySelector(".ajoutphoto");
 const modalTriggers2 = document.querySelectorAll(".modal-trigger2");
-const boutonRetourner=document.querySelector(".retourner");
-const boutonsupprimer=document.querySelector(".supprimerphoto");
+const boutonRetourner = document.querySelector(".retourner");
+const boutonsupprimer = document.querySelector(".supprimerphoto");
 
 
 async function main() {
@@ -41,14 +44,22 @@ async function getWorks(categoryId) {
 
             //on vide la gallerie
             gallery.innerHTML = "";
+            galleryModale.innerHTML = "";
 
             projects.forEach((project) => {
                 if (categoryId == project.category.id || categoryId == null) {
-                    createProject(project);                   
+                    createProject(project);
                 }
                 createProjectModal(project);
 
             });
+
+            gestionDeleteWorksModale()
+
+
+
+
+
         })
         .catch((error) => {
             console.log(error);
@@ -68,7 +79,16 @@ async function admin() {
 
         filters.classList.add("hiddenAdmin");
 
-        
+        const lienLogin = document.querySelector(".login");
+        lienLogin.innerText = "Logout";
+
+
+        lienLogin.addEventListener("click", function (e) {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            location.reload();
+        });
+
     }
 
 }
@@ -95,6 +115,7 @@ async function getCategories() {
             categories.forEach((categorie) => {
 
                 createButton(categorie);
+                creatOptionSelectAjoutWorks(categorie)
 
             });
         })
@@ -124,7 +145,7 @@ async function getCategories() {
             });
         })
 
-       
+
         .catch((error) => {
             console.log(error);
         });
@@ -140,13 +161,25 @@ function createButton(categorie) {
     filters.appendChild(buttonFilter);
 };
 
+
+// Fonction pour créer un bouton dans la nav des filtres
+function creatOptionSelectAjoutWorks(categorie) {
+    const optionSelect = document.createElement("option");
+    optionSelect.setAttribute("value", categorie.id);
+
+    optionSelect.innerText = categorie.name;
+    optionsSelect.appendChild(optionSelect);
+};
+
+
+
 // Fonction pour créer un projet dans la galerie
 function createProject(project) {
     const figureProject = document.createElement("figure");
     figureProject.setAttribute("data-tag", project.category.name);
     figureProject.setAttribute("data-id", project.id);
 
-    const imageProject = document.createElement("img");  
+    const imageProject = document.createElement("img");
     imageProject.src = project.imageUrl;
     imageProject.alt = project.title;
 
@@ -188,14 +221,37 @@ function createProjectModal(project) {
 }
 /*partie modal */
 
+
+function gestionDeleteWorksModale() {
+
+    //on récupère les boutons
+    const trashIcons = document.querySelectorAll(".trash-icon");
+
+
+    trashIcons.forEach((trashicon) => {
+        //Pour chaque bouton, au clic
+        trashicon.addEventListener("click", function () {
+            // Get (et Affiche le data-tag)
+
+
+            //Get catégorie id
+            let projectId = trashicon.getAttribute("data-id");
+
+            deleteElement(projectId)
+
+            getWorks();
+        });
+    });
+}
+
 modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 
-function toggleModal(){
-  modalContainer1.classList.toggle("active")
+function toggleModal() {
+    modalContainer1.classList.toggle("active")
 }
 ;
 
-btnajoutphoto.addEventListener("click", function(){
+btnajoutphoto.addEventListener("click", function () {
     modalContainer1.style.display = "none";
     modalContainer2.style.display = "block";
 });
@@ -203,35 +259,37 @@ btnajoutphoto.addEventListener("click", function(){
 // Fonction pour fermer la modal
 
 function closeModal() {
-    modalContainer2.style.display  = "none";
-  }
+    modalContainer2.style.display = "none";
+}
 
-  // Événement de clic sur le bouton de fermeture
-  modalTriggers2.forEach(close=>close.addEventListener("click",closeModal));
+// Événement de clic sur le bouton de fermeture
+modalTriggers2.forEach(close => close.addEventListener("click", closeModal));
 
-  // Ajouter un gestionnaire d'événements au bouton "Retourner"
-boutonRetourner.addEventListener('click', function() {
+// Ajouter un gestionnaire d'événements au bouton "Retourner"
+boutonRetourner.addEventListener('click', function () {
     // Cacher le second modal
     modalContainer2.style.display = 'none';
-  
+
     // Afficher le premier modal
     modalContainer1.style.display = 'block';
-  });
+});
 
-  // Evénement de clic sur le bouton supprimer 
-  boutonsupprimer.addEventListener('click', deleteElement ());
- 
+
 
 //function pour supprimer les elements de l'API//
 
-function deleteElement(project){
-    fetch("http://localhost:5678/api/works/${id}",{
-        method: 'DELETE'
-      })
+function deleteElement(projectId) {
 
-.then((response) => {
+
+
+
+    fetch(`http://localhost:5678/api/works/${projectId}`, {
+        method: 'DELETE'
+    })
+
+        .then((response) => {
             if (response.ok) {
-               console.log ("L'élément a été supprimé avec succès")
+                console.log("L'élément a été supprimé avec succès")
             } else {
                 console.log(" Gérez l'erreur en cas de problème lors de la suppression");
             }
@@ -241,71 +299,46 @@ function deleteElement(project){
         });
 }
 
-/*ajout photo 
- // Fonction exécutée lorsque le formulaire est soumis
- function handleFormSubmit(event) {
-    event.preventDefault(); // Empêche l'envoi du formulaire par défaut
 
-    // Récupérer l'élément input qui contient la photo
-    const photoInput = document.getElementById('image');
-    
-    // Vérifier si une photo a été sélectionnée
-    if (photoInput.files.length > 0) {
-        const file = photoInput.files[0]; // Récupérer le fichier photo
-        
-        // Vous pouvez ici envoyer le fichier photo au serveur ou effectuer d'autres traitements
-        // Par exemple, utiliser AJAX pour envoyer le fichier au serveur
-        
-        console.log('Photo sélectionnée:', file.name);
-    } else {
-        console.log('Aucune photo sélectionnée.');
-    }
-}
 
-// Ajouter un gestionnaire d'événement sur le formulaire pour détecter quand il est soumis
-const uploadForm = document.getElementById('photoForm');
-uploadForm.addEventListener('submit', handleFormSubmit);*/
 
-document.getElementById("photoForm").addEventListener("submit", function(event) {
+
+
+document.getElementById("photoForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Empêche le rechargement de la page par défaut
     uploadPhoto();
-  });
+});
 
-  function uploadPhoto() {
+function uploadPhoto() {
     const photoInput = document.getElementById("image");
     const file = photoInput.files[0];
 
     if (!file) {
-      alert("Veuillez sélectionner une photo.");
-      return;
+        alert("Veuillez sélectionner une photo.");
+        return;
     }
 
     // Créer un objet FormData pour envoyer le fichier
     const formData = new FormData();
     formData.append("photo", file);
 
-    
+
     const uploadUrl = "http://localhost:5678/api/works";
 
     // Envoi de la photo via la requête Fetch
     fetch(uploadUrl, {
-      method: "POST",
-      body: formData
+        method: "POST",
+        body: formData
     })
-      .then(response => response.json())
-      .then(data => {
-        // Traitez la réponse du serveur ici si nécessaire
-        console.log("Réponse du serveur :", data);
-        alert("La photo a été envoyée avec succès !");
-      })
-      .catch(error => {
-        console.error("Erreur lors de l'envoi de la photo :", error);
-        alert("Une erreur s'est produite lors de l'envoi de la photo.");
-      });
-  }
+        .then(response => response.json())
+        .then(data => {
+            // Traitez la réponse du serveur ici si nécessaire
+            console.log("Réponse du serveur :", data);
+            alert("La photo a été envoyée avec succès !");
+        })
+        .catch(error => {
+            console.error("Erreur lors de l'envoi de la photo :", error);
+            alert("Une erreur s'est produite lors de l'envoi de la photo.");
+        });
+}
 
-  /*afficher les categories */
-
-   // Fonction pour afficher les catégories dans le document
-   function displayCategories(categories) {
-    const categoriesContainer = document.getElementById("category");}
