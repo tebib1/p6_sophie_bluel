@@ -13,7 +13,6 @@ const modalContainer2 = document.querySelector(".contenu-modal2");
 const btnajoutphoto = document.querySelector(".ajoutphoto");
 const modalTriggers2 = document.querySelectorAll(".modal-trigger2");
 const boutonRetourner = document.querySelector(".retourner");
-const boutonsupprimer = document.querySelector(".supprimerphoto");
 
 
 async function main() {
@@ -230,14 +229,14 @@ function gestionDeleteWorksModale() {
 
     trashIcons.forEach((trashicon) => {
         //Pour chaque bouton, au clic
-        trashicon.addEventListener("click", function () {
-            // Get (et Affiche le data-tag)
-
+        trashicon.addEventListener("click", function (e) {
 
             //Get catégorie id
+            
             let projectId = trashicon.getAttribute("data-id");
+            deleteElement(projectId);
 
-            deleteElement(projectId)
+            
 
             getWorks();
         });
@@ -284,14 +283,19 @@ function deleteElement(projectId) {
 
 
     fetch(`http://localhost:5678/api/works/${projectId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+            
+        },
     })
 
         .then((response) => {
             if (response.ok) {
-                console.log("L'élément a été supprimé avec succès")
+                alert("L'élément a été supprimé avec succès")
             } else {
-                console.log(" Gérez l'erreur en cas de problème lors de la suppression");
+                 alert(" Gérez l'erreur en cas de problème lors de la suppression");
             }
         })
         .catch((error) => {
