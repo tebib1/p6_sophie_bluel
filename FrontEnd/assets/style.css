@@ -768,3 +768,12 @@ text-align: center;
 	bottom:-25px;
 	
 }
+
+#preview{
+	width: 300px;
+	height: 200px;
+	border: 1px solid #ccc;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+  }

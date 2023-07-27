@@ -359,3 +359,24 @@ form.addEventListener('submit', async (event) => {
     console.error(error.message);
   }
 });
+
+
+document.getElementById("photoInput").addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (!file) return; // Si aucun fichier sélectionné, sortir de la fonction
+    
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const imageDataURL = e.target.result;
+      
+      // Définir la partie de l'image que vous souhaitez afficher
+      // Vous pouvez ajuster les valeurs de backgroundPositionX et backgroundPositionY selon vos besoins
+      const backgroundPositionX = "50%"; // Par exemple, "50%", "0%", "100%", "10px", etc.
+      const backgroundPositionY = "50%"; // Par exemple, "50%", "0%", "100%", "10px", etc.
+  
+      const imagePreview = document.getElementById("preview");
+      imagePreview.style.backgroundImage = `url(${imageDataURL})`;
+      imagePreview.style.backgroundPosition = `${backgroundPositionX} ${backgroundPositionY}`;
+    };
+    reader.readAsDataURL(file);
+  });
