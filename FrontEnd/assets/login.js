@@ -29,7 +29,7 @@ formLogin.addEventListener("submit", function (e) {
       }
       else {
         console.log('Erreur dans l’identifiant ou le mot de passe');
-        feedback.innerText = "utilisateur non reconnue!";
+        feedback.innerText = "Erreur dans l’identifiant ou le mot de passe!";
         feedback.style.display = "block";
       }
     })
