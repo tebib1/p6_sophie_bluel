@@ -226,6 +226,7 @@ function gestionDeleteWorksModale() {
     //on récupère les boutons
     const trashIcons = document.querySelectorAll(".trash-icon");
 
+    
 
     trashIcons.forEach((trashicon) => {
         //Pour chaque bouton, au clic
@@ -280,9 +281,10 @@ boutonRetourner.addEventListener('click', function () {
 function deleteElement(projectId) {
 
 
-
+    let token = sessionStorage.getItem("accessToken");
 
     fetch(`http://localhost:5678/api/works/${projectId}`, {
+        
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -298,6 +300,11 @@ function deleteElement(projectId) {
                  alert(" Gérez l'erreur en cas de problème lors de la suppression");
             }
         })
+        .then(data => {
+
+            console.log(data)
+            localStorage.setItem("token", data.token);
+          })
         .catch((error) => {
             console.log(error);
         });
@@ -307,42 +314,48 @@ function deleteElement(projectId) {
 
 
 
+// Récupérer les éléments du DOM
+const form = document.getElementById('photoForm');
+const imageInput = document.getElementById('photoInput');
+const preview = document.getElementById('preview');
 
-document.getElementById("photoForm").addEventListener("submit", function (event) {
-    event.preventDefault(); // Empêche le rechargement de la page par défaut
-    uploadPhoto();
-});
+// Écouter l'événement de soumission du formulaire
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-function uploadPhoto() {
-    const photoInput = document.getElementById("image");
-    const file = photoInput.files[0];
+  // Vérifier s'il y a une image sélectionnée
+  if (imageInput.files.length === 0) {
+    alert('Veuillez sélectionner une image.');
+    return;
+  }
 
-    if (!file) {
-        alert("Veuillez sélectionner une photo.");
-        return;
+  const imageFile = imageInput.files[0];
+
+  // Afficher une prévisualisation de l'image sur la page (optionnel)
+  const imageURL = URL.createObjectURL(imageFile);
+  const imageElement = document.createElement('img');
+  imageElement.src = imageURL;
+  preview.appendChild(imageElement);
+
+  // Envoyer l'image à l'API)
+  const apiEndpoint = 'http://localhost:5678/api/works/';
+  const formData = new FormData();
+  formData.append('image', imageFile);
+
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Une erreur est survenue lors de l\'envoi de l\'image.');
     }
 
-    // Créer un objet FormData pour envoyer le fichier
-    const formData = new FormData();
-    formData.append("photo", file);
-
-
-    const uploadUrl = "http://localhost:5678/api/works";
-
-    // Envoi de la photo via la requête Fetch
-    fetch(uploadUrl, {
-        method: "POST",
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            // Traitez la réponse du serveur ici si nécessaire
-            console.log("Réponse du serveur :", data);
-            alert("La photo a été envoyée avec succès !");
-        })
-        .catch(error => {
-            console.error("Erreur lors de l'envoi de la photo :", error);
-            alert("Une erreur s'est produite lors de l'envoi de la photo.");
-        });
-}
-
+    // Faire quelque chose avec la réponse de l'API si nécessaire
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
