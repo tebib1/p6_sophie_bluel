@@ -1,3 +1,4 @@
+
 const inputemail = document.querySelector("#username");
 const inputpassword = document.querySelector("#pass");
 const inputconnexion = document.querySelector(".btnconnection");
@@ -37,7 +38,7 @@ formLogin.addEventListener("submit", function (e) {
     .then(data => {
 
       console.log(data)
-      localStorage.setItem("token", data.token);
+      sessionStorage.setItem("token", data.token);
       window.location.href = "index.html"
     })
 

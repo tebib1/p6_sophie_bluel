@@ -67,7 +67,7 @@ async function getWorks(categoryId) {
 
 async function admin() {
     // On récupère le token
-    const token = window.localStorage.getItem("token");
+    const token = window.sessionStorage.getItem("token");
     if (token !== null) {
 
         //on récupère tous les éléments admin
@@ -84,9 +84,12 @@ async function admin() {
 
         lienLogin.addEventListener("click", function (e) {
             e.preventDefault();
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
             location.reload();
         });
+
+
+        gestionModale();
 
     }
 
@@ -239,40 +242,55 @@ function gestionDeleteWorksModale() {
 
             
 
-            getWorks();
+            //getWorks();
         });
     });
 }
 
-modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
+
 
 function toggleModal() {
     modalContainer1.classList.toggle("active")
+    //modalContainer1.style.display = "block";
 }
-;
 
-btnajoutphoto.addEventListener("click", function () {
-    modalContainer1.style.display = "none";
-    modalContainer2.style.display = "block";
-});
+
+
+function gestionModale(){
+
+    modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
+
+
+    // Événement de clic sur le bouton de fermeture
+    modalTriggers2.forEach(close => close.addEventListener("click", closeModal));
+
+    // Ajouter un gestionnaire d'événements au bouton "Retourner"
+    boutonRetourner.addEventListener('click', function () {
+        // Cacher le second modal
+        modalContainer2.classList.toggle("active")
+
+        // Afficher le premier modal
+        //modalContainer1.classList.toggle("active")
+    });
+
+
+    btnajoutphoto.addEventListener("click", function () {
+        modalContainer1.classList.toggle("active");
+        modalContainer2.classList.toggle("active");
+    });
+
+}
+
 
 // Fonction pour fermer la modal
 
 function closeModal() {
-    modalContainer2.style.display = "none";
+    modalContainer1.classList.toggle("active")
+    modalContainer2.classList.toggle("active")
+    
 }
 
-// Événement de clic sur le bouton de fermeture
-modalTriggers2.forEach(close => close.addEventListener("click", closeModal));
 
-// Ajouter un gestionnaire d'événements au bouton "Retourner"
-boutonRetourner.addEventListener('click', function () {
-    // Cacher le second modal
-    modalContainer2.style.display = 'none';
-
-    // Afficher le premier modal
-    modalContainer1.style.display = 'block';
-});
 
 
 
@@ -281,7 +299,7 @@ boutonRetourner.addEventListener('click', function () {
 function deleteElement(projectId) {
 
 
-    let token = sessionStorage.getItem("accessToken");
+    let token = sessionStorage.getItem("token");
 
     fetch(`http://localhost:5678/api/works/${projectId}`, {
         
@@ -296,6 +314,7 @@ function deleteElement(projectId) {
         .then((response) => {
             if (response.ok) {
                 alert("L'élément a été supprimé avec succès")
+                getWorks();
             } else {
                  alert(" Gérez l'erreur en cas de problème lors de la suppression");
             }
@@ -303,7 +322,7 @@ function deleteElement(projectId) {
         .then(data => {
 
             console.log(data)
-            localStorage.setItem("token", data.token);
+            //sessionStorage.setItem("token", data.token);
           })
         .catch((error) => {
             console.log(error);
@@ -316,7 +335,7 @@ function deleteElement(projectId) {
 
 // Récupérer les éléments du DOM
 const form = document.getElementById('photoForm');
-const imageInput = document.getElementById('photoInput');
+const imageInput = document.getElementById('image');
 const preview = document.getElementById('preview');
 
 // Écouter l'événement de soumission du formulaire
@@ -339,19 +358,34 @@ form.addEventListener('submit', async (event) => {
 
   // Envoyer l'image à l'API)
   const apiEndpoint = 'http://localhost:5678/api/works/';
+  
+
+
+
   const formData = new FormData();
-  formData.append('image', imageFile);
+  formData.append("image", document.getElementById("image").files[0]);
+  formData.append("title", document.getElementById("title").value);
+  formData.append("category", document.getElementById("category").value);
+
+  const monToken = sessionStorage.getItem("token");
+
 
   try {
     const response = await fetch(apiEndpoint, {
-      method: 'POST',
-      body: formData,
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${monToken}`,
+        },
+        body: formData,
     });
 
     if (!response.ok) {
       throw new Error('Une erreur est survenue lors de l\'envoi de l\'image.');
     }
 
+    getWorks(); //on actualise les galeries avec les works fraichement récupérer de l'api
+    //this.reset();//réinitilaisation formulaire ajout works
+    closeModal();
     // Faire quelque chose avec la réponse de l'API si nécessaire
     const data = await response.json();
     console.log(data);
@@ -361,22 +395,25 @@ form.addEventListener('submit', async (event) => {
 });
 
 
-document.getElementById("photoInput").addEventListener("change", function (event) {
+document.getElementById("image").addEventListener("change", function (event) {
     const file = event.target.files[0];
-    if (!file) return; // Si aucun fichier sélectionné, sortir de la fonction
+    const imagePreview = document.getElementById("preview");
     
     const reader = new FileReader();
     reader.onload = function (e) {
       const imageDataURL = e.target.result;
       
-      // Définir la partie de l'image que vous souhaitez afficher
-      // Vous pouvez ajuster les valeurs de backgroundPositionX et backgroundPositionY selon vos besoins
-      const backgroundPositionX = "50%"; // Par exemple, "50%", "0%", "100%", "10px", etc.
-      const backgroundPositionY = "50%"; // Par exemple, "50%", "0%", "100%", "10px", etc.
-  
-      const imagePreview = document.getElementById("preview");
-      imagePreview.style.backgroundImage = `url(${imageDataURL})`;
-      imagePreview.style.backgroundPosition = `${backgroundPositionX} ${backgroundPositionY}`;
+      
+      reader.onloadend = function () {
+        imagePreview.style.backgroundImage = `url(${reader.result})`;
     };
-    reader.readAsDataURL(file);
+
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+}
+
   });
+
+  
+ 

@@ -1,8 +1,4 @@
 
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
 
 html,
 body,
@@ -771,9 +767,15 @@ text-align: center;
 
 #preview{
 	width: 300px;
-	height: 200px;
-	border: 1px solid #ccc;
+	height: 150px;
+	border: none;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
+	position:absolute;
+	top:130px;
+	left:200px;
+width: 180px;
+height: 169px;
+
   }
