@@ -313,10 +313,10 @@ function deleteElement(projectId) {
 
         .then((response) => {
             if (response.ok) {
-                alert("L'élément a été supprimé avec succès")
+                console.log("L'élément a été supprimé avec succès")
                 getWorks();
             } else {
-                 alert(" Gérez l'erreur en cas de problème lors de la suppression");
+                console.log(" Gérez l'erreur en cas de problème lors de la suppression");
             }
         })
         .then(data => {
@@ -394,26 +394,24 @@ form.addEventListener('submit', async (event) => {
   }
 });
 
-
-document.getElementById("image").addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    const imagePreview = document.getElementById("preview");
-    
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const imageDataURL = e.target.result;
-      
-      
-      reader.onloadend = function () {
-        imagePreview.style.backgroundImage = `url(${reader.result})`;
-    };
-
+  const prevImg = document.getElementById("prev-img")
+const image = document.getElementById("image")
+const remuveIcone = document.getElementById("preview")
+image.onchange = Event => {
+    const [file] = image.files
     if (file) {
-        reader.readAsDataURL(file);
+        prevImg.style.display = "block";
+        remuveIcone.style.display = "none";
+      prevImg.src = URL.createObjectURL(file)
     }
-}
+  }
 
-  });
+  //function pour rentialiser les elements des champs //
 
-  
- 
+  function resetSearchFields() {
+    // Récupérer l'élément du formulaire par son ID
+    var form = document.getElementById("photoForm");
+    
+    // Utiliser la méthode reset() pour réinitialiser le formulaire
+    form.reset();
+  }

@@ -142,7 +142,7 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 80px 0px;
+	margin: 80px -81px;
 }
 
 section {
@@ -199,7 +199,7 @@ li:hover {
 
 #introduction img {
 	display: block;
-	margin: auto;
+	/* margin: auto; */
 	width: 80%;
 }
 
@@ -354,7 +354,7 @@ footer nav ul {
 	flex-direction: column;
 }
 
-input {
+.connection input {
 	width: 379px;
 	height: 51px;
 	background: #FFFFFF;
@@ -364,7 +364,7 @@ input {
 	border: none;
 }
 
-label {
+.connection label {
 	font-family: 'Work Sans';
 	font-style: normal;
 	font-weight: 500;
@@ -373,6 +373,17 @@ label {
 	color: #3D3D3D;
 	margin-bottom: 10px;
 	margin-top: 10px;
+}
+
+input[type="submit"] {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin: 2em auto;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
 }
 
 #login a {
@@ -505,7 +516,7 @@ label {
 }
 
 #introduction .btn_modal {
-	margin-left: 51px;
+	/* margin-left: 51px; */
 	margin-top: 15px;
 }
 
@@ -661,18 +672,20 @@ height: 36px;
 top: 1239px;
 left: 600px;
 border-radius: 60px;
-
+border:none;
 }
 .text-css {
 display:flex;
 	justify-content:start;
 	align-items:start;
 	text-align:start;
-	width:67%;
+	width:85%;
 	font-family: Work Sans;
-font-size: 14px;
-font-weight: 500;
-line-height: 16px;
+   font-size: 14px;
+   font-weight: 500;
+   line-height: 16px;
+	padding-bottom:10px;
+	padding-top:10px;
 }
 .ajout_fichier{
 	display:flex;
@@ -708,6 +721,12 @@ justify-content:center;
   cursor: pointer;
 }
 
+#title{
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+border:none;
+	width: 420px;
+    height: 51px;
+}
 #category {
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 border:none;
@@ -765,17 +784,17 @@ text-align: center;
 	
 }
 
-#preview{
-	width: 300px;
-	height: 150px;
-	border: none;
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
+  #prev-img{
 	position:absolute;
 	top:130px;
 	left:200px;
 width: 180px;
 height: 169px;
+	  z-index:auto;
+}
 
-  }
+
+#preview{
+	opacity:0;
+}
+
