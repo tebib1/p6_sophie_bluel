@@ -348,6 +348,8 @@ form.addEventListener('submit', async (event) => {
     return;
   }
 
+
+
   const imageFile = imageInput.files[0];
 
   // Afficher une prévisualisation de l'image sur la page (optionnel)
@@ -406,12 +408,20 @@ image.onchange = Event => {
     }
   }
 
-  //function pour rentialiser les elements des champs //
+  
+  const formulaire = document.getElementById('photoForm');
 
-  function resetSearchFields() {
-    // Récupérer l'élément du formulaire par son ID
-    var form = document.getElementById("photoForm");
-    
-    // Utiliser la méthode reset() pour réinitialiser le formulaire
-    form.reset();
-  }
+formulaire.addEventListener('submit', (event) => {
+  event.preventDefault(); // Empêche l'envoi du formulaire
+
+  // Obtenez les valeurs des champs que vous souhaitez conserver
+  const nom = document.getElementById('title').value;
+  const email = document.getElementById('category').value;
+  const background = document.getElementById('prev-img').value;
+  
+  // Réinitialisez le formulaire
+  formulaire.reset();
+});
+
+
+     
