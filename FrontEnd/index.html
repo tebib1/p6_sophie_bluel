@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -64,6 +65,7 @@
 						<p class="type-files">jpg, png : 4mo max</p>
 					</div>
 				</div>
+				
 				<label class="text-css" for="title">Titre</label>
 				<input type="text" name="title" id="title" required />
 				<label class="text-css" for="category">Categorie</label>
@@ -71,8 +73,9 @@
 					<option value="">veuillez sélectionner une catégorie</option>
 
 				</select>
-				<hr />
+				<hr class="bar"/>
 				<input class="btn-submit" type="submit" value="valider"/>
+				<button class="close-photo" style="display: none;">X</button>
 				<i class="fa-regular fa-image" id="preview" style="display:block;"></i>
 				<img id="prev-img" src="#" alt="your image" style="display: none;"/>
 			</form>
