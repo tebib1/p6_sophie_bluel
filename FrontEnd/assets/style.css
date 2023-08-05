@@ -798,3 +798,17 @@ height: 169px;
 	opacity:0;
 }
 
+.modal2 .bar {
+	margin-top:50px;
+		
+}
+
+.close-photo{
+	display: flex;
+	margin-left: 390px;
+	position:absolute;
+	top:135px;
+	border: none;
+	font-size: 15px;
+	background: rgba(232, 241, 246, 1);
+}

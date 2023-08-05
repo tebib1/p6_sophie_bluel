@@ -15,6 +15,8 @@ const modalTriggers2 = document.querySelectorAll(".modal-trigger2");
 const boutonRetourner = document.querySelector(".retourner");
 
 
+const buttonSubmitAddWork = document.querySelector(".btn-submit");
+
 async function main() {
 
     await getWorks();
@@ -90,6 +92,8 @@ async function admin() {
 
 
         gestionModale();
+
+        gestionDisabledButtonSubmit();
 
     }
 
@@ -292,6 +296,62 @@ function closeModal() {
 
 
 
+  //fonction boutton disabled
+  function disabled() {
+    buttonSubmitAddWork.disabled = true;
+    buttonSubmitAddWork.style.backgroundColor = "#a7a7a7";
+  }
+  //fonction boutton  pas disabled
+  function notDisabled() {
+    buttonSubmitAddWork.disabled = false;
+    buttonSubmitAddWork.style.backgroundColor = "#1d6154";
+  }
+
+
+//fonction comportement boutton
+function buttonDisabled() {
+
+    const titleModal = document.getElementById("title");
+    const select = document.getElementById("category");
+    const inputFile = document.getElementById("image");
+    const file = inputFile.files[0];
+    const titleNotEmpty = titleModal.value !== "";
+    const optionNotNull = select.value !== "";
+  
+    
+  
+    //si aucun champ n'est vide  boutton activé sinon boutton désactivé
+    if (file && titleNotEmpty && optionNotNull) {
+      notDisabled();
+      console.log("plus disabled");
+      console.log(file);
+      console.log(titleModal.value);
+      console.log(select.value);
+    } else {
+      disabled();
+      console.log("problème disabled");
+      console.log(file);
+      console.log(titleModal.value);
+      console.log(select.value);
+    }
+  }
+
+
+function gestionDisabledButtonSubmit(){  
+  
+  //lorsque l'utilisateur modifie un champ alors fonction buttonDisabled appelée
+  const titleModal = document.getElementById("title");
+  const select = document.getElementById("category");
+  const inputFile = document.getElementById("image");
+  titleModal.addEventListener("input", buttonDisabled);
+  select.addEventListener("input", buttonDisabled);
+  inputFile.addEventListener("input", buttonDisabled);
+
+  disabled();
+  
+  
+  
+}
 
 
 //function pour supprimer les elements de l'API//
@@ -350,15 +410,7 @@ form.addEventListener('submit', async (event) => {
 
 
 
-  const imageFile = imageInput.files[0];
-
-  // Afficher une prévisualisation de l'image sur la page (optionnel)
-  const imageURL = URL.createObjectURL(imageFile);
-  const imageElement = document.createElement('img');
-  imageElement.src = imageURL;
-  preview.appendChild(imageElement);
-
-  // Envoyer l'image à l'API)
+  
   const apiEndpoint = 'http://localhost:5678/api/works/';
   
 
@@ -386,8 +438,9 @@ form.addEventListener('submit', async (event) => {
     }
 
     getWorks(); //on actualise les galeries avec les works fraichement récupérer de l'api
-    //this.reset();//réinitilaisation formulaire ajout works
+    form.reset();//réinitilaisation formulaire ajout works
     closeModal();
+    
     // Faire quelque chose avec la réponse de l'API si nécessaire
     const data = await response.json();
     console.log(data);
@@ -396,14 +449,19 @@ form.addEventListener('submit', async (event) => {
   }
 });
 
+
   const prevImg = document.getElementById("prev-img")
 const image = document.getElementById("image")
 const remuveIcone = document.getElementById("preview")
+const closephoto= document.querySelector(".close-photo");
 image.onchange = Event => {
     const [file] = image.files
     if (file) {
+        
         prevImg.style.display = "block";
+        closephoto.style.display = "block";
         remuveIcone.style.display = "none";
+        
       prevImg.src = URL.createObjectURL(file)
     }
   }
@@ -411,17 +469,11 @@ image.onchange = Event => {
   
   const formulaire = document.getElementById('photoForm');
 
-formulaire.addEventListener('submit', (event) => {
-  event.preventDefault(); // Empêche l'envoi du formulaire
 
-  // Obtenez les valeurs des champs que vous souhaitez conserver
-  const nom = document.getElementById('title').value;
-  const email = document.getElementById('category').value;
-  const background = document.getElementById('prev-img').value;
-  
-  // Réinitialisez le formulaire
-  formulaire.reset();
+
+
+  const closeBtn = document.querySelector(".close-photo");
+  const fermerphoto = document.getElementById("prev-img")
+  closeBtn.addEventListener("click", function() {
+    fermerphoto.style.display = "none";
 });
-
-
-     
