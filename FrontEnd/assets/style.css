@@ -389,7 +389,7 @@ input[type="submit"] {
 #login a {
 	display: flex;
 	justify-content: center;
-	color: black;
+	color: bslack;
 	margin-bottom: 50px;
 }
 
@@ -397,7 +397,7 @@ input[type="submit"] {
 	display: none;
 	color: red;
 	font-weight: bold;
-	font-size: 30px;
+	font-size: 15px;
 	margin-top: -5px;
 	margin-bottom: 20px;
 }
