@@ -75,7 +75,7 @@ async function admin() {
         //on récupère tous les éléments admin
         const elementsAdmin = document.querySelectorAll(".hiddenAdmin");
 
-        //on enlève, pour chaque bouton la classe is-active
+     
         elementsAdmin.forEach((elementAdmin) => elementAdmin.classList.remove("hiddenAdmin"));
 
         filters.classList.add("hiddenAdmin");
@@ -94,6 +94,8 @@ async function admin() {
         gestionModale();
 
         gestionDisabledButtonSubmit();
+
+        gestionAddWorksModale();
 
     }
 
@@ -233,18 +235,18 @@ function gestionDeleteWorksModale() {
     //on récupère les boutons
     const trashIcons = document.querySelectorAll(".trash-icon");
 
-    
+
 
     trashIcons.forEach((trashicon) => {
         //Pour chaque bouton, au clic
         trashicon.addEventListener("click", function (e) {
 
             //Get catégorie id
-            
+
             let projectId = trashicon.getAttribute("data-id");
             deleteElement(projectId);
 
-            
+
 
             //getWorks();
         });
@@ -260,7 +262,7 @@ function toggleModal() {
 
 
 
-function gestionModale(){
+function gestionModale() {
 
     modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 
@@ -291,21 +293,21 @@ function gestionModale(){
 function closeModal() {
     modalContainer1.classList.toggle("active")
     modalContainer2.classList.toggle("active")
-    
+
 }
 
 
 
-  //fonction boutton disabled
-  function disabled() {
+//fonction boutton disabled
+function disabled() {
     buttonSubmitAddWork.disabled = true;
     buttonSubmitAddWork.style.backgroundColor = "#a7a7a7";
-  }
-  //fonction boutton  pas disabled
-  function notDisabled() {
+}
+//fonction boutton  pas disabled
+function notDisabled() {
     buttonSubmitAddWork.disabled = false;
     buttonSubmitAddWork.style.backgroundColor = "#1d6154";
-  }
+}
 
 
 //fonction comportement boutton
@@ -317,40 +319,40 @@ function buttonDisabled() {
     const file = inputFile.files[0];
     const titleNotEmpty = titleModal.value !== "";
     const optionNotNull = select.value !== "";
-  
-    
-  
+
+
+
     //si aucun champ n'est vide  boutton activé sinon boutton désactivé
     if (file && titleNotEmpty && optionNotNull) {
-      notDisabled();
-      console.log("plus disabled");
-      console.log(file);
-      console.log(titleModal.value);
-      console.log(select.value);
+        notDisabled();
+        console.log("plus disabled");
+        console.log(file);
+        console.log(titleModal.value);
+        console.log(select.value);
     } else {
-      disabled();
-      console.log("problème disabled");
-      console.log(file);
-      console.log(titleModal.value);
-      console.log(select.value);
+        disabled();
+        console.log("problème disabled");
+        console.log(file);
+        console.log(titleModal.value);
+        console.log(select.value);
     }
-  }
+}
 
 
-function gestionDisabledButtonSubmit(){  
-  
-  //lorsque l'utilisateur modifie un champ alors fonction buttonDisabled appelée
-  const titleModal = document.getElementById("title");
-  const select = document.getElementById("category");
-  const inputFile = document.getElementById("image");
-  titleModal.addEventListener("input", buttonDisabled);
-  select.addEventListener("input", buttonDisabled);
-  inputFile.addEventListener("input", buttonDisabled);
+function gestionDisabledButtonSubmit() {
 
-  disabled();
-  
-  
-  
+    //lorsque l'utilisateur modifie un champ alors fonction buttonDisabled appelée
+    const titleModal = document.getElementById("title");
+    const select = document.getElementById("category");
+    const inputFile = document.getElementById("image");
+    titleModal.addEventListener("input", buttonDisabled);
+    select.addEventListener("input", buttonDisabled);
+    inputFile.addEventListener("input", buttonDisabled);
+
+    disabled();
+
+
+
 }
 
 
@@ -362,12 +364,12 @@ function deleteElement(projectId) {
     let token = sessionStorage.getItem("token");
 
     fetch(`http://localhost:5678/api/works/${projectId}`, {
-        
+
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
-            
+
         },
     })
 
@@ -383,7 +385,7 @@ function deleteElement(projectId) {
 
             console.log(data)
             //sessionStorage.setItem("token", data.token);
-          })
+        })
         .catch((error) => {
             console.log(error);
         });
@@ -398,82 +400,110 @@ const form = document.getElementById('photoForm');
 const imageInput = document.getElementById('image');
 const preview = document.getElementById('preview');
 
-// Écouter l'événement de soumission du formulaire
-form.addEventListener('submit', async (event) => {
-  event.preventDefault();
-
-  // Vérifier s'il y a une image sélectionnée
-  if (imageInput.files.length === 0) {
-    alert('Veuillez sélectionner une image.');
-    return;
-  }
-
-
-
-  
-  const apiEndpoint = 'http://localhost:5678/api/works/';
-  
-
-
-
-  const formData = new FormData();
-  formData.append("image", document.getElementById("image").files[0]);
-  formData.append("title", document.getElementById("title").value);
-  formData.append("category", document.getElementById("category").value);
-
-  const monToken = sessionStorage.getItem("token");
-
-
-  try {
-    const response = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${monToken}`,
-        },
-        body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error('Une erreur est survenue lors de l\'envoi de l\'image.');
-    }
-
-    getWorks(); //on actualise les galeries avec les works fraichement récupérer de l'api
-    form.reset();//réinitilaisation formulaire ajout works
-    closeModal();
-    
-    // Faire quelque chose avec la réponse de l'API si nécessaire
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
-
-  const prevImg = document.getElementById("prev-img")
+const prevImg = document.getElementById("prev-img")
 const image = document.getElementById("image")
 const remuveIcone = document.getElementById("preview")
-const closephoto= document.querySelector(".close-photo");
-image.onchange = Event => {
-    const [file] = image.files
-    if (file) {
-        
-        prevImg.style.display = "block";
-        closephoto.style.display = "block";
-        remuveIcone.style.display = "none";
-        
-      prevImg.src = URL.createObjectURL(file)
+const closephoto = document.querySelector(".close-photo");
+
+const imageVide = document.querySelector(".ajout_fichier img");
+const photoUploadButton = document.querySelector(".photo-upload-button");
+const typeFiles = document.querySelector(".type-files");
+
+
+
+const apiEndpoint = 'http://localhost:5678/api/works/';
+const monToken = sessionStorage.getItem("token");
+
+
+const formulaire = document.getElementById('photoForm');
+const closeBtn = document.querySelector(".close-photo");
+const fermerphoto = document.getElementById("prev-img")
+
+
+function gestionAddWorksModale() {
+
+    // Écouter l'événement de soumission du formulaire
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Vérifier s'il y a une image sélectionnée
+        if (imageInput.files.length === 0) {
+            alert('Veuillez sélectionner une image.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", document.getElementById("image").files[0]);
+        formData.append("title", document.getElementById("title").value);
+        formData.append("category", document.getElementById("category").value);
+
+
+
+
+        try {
+            const response = await fetch(apiEndpoint, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${monToken}`,
+                },
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error('Une erreur est survenue lors de l\'envoi de l\'image.');
+            }
+
+            getWorks(); //on actualise les galeries avec les works fraichement récupérer de l'api
+            form.reset();//réinitilaisation formulaire ajout works
+            resetPrevImage();
+            closeModal();
+
+            // Faire quelque chose avec la réponse de l'API si nécessaire
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error(error.message);
+        }
+    });
+
+
+
+
+    image.onchange = Event => {
+        const [file] = image.files
+        if (file) {
+    
+            prevImg.style.display = "block";
+            closephoto.style.display = "block";
+            remuveIcone.style.display = "none";
+            imageVide.style.display = "none";
+            photoUploadButton.style.display = "none";
+            typeFiles.style.display = "none";
+    
+            prevImg.src = URL.createObjectURL(file)
+        }
     }
-  }
 
-  
-  const formulaire = document.getElementById('photoForm');
+    closeBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+    
+        resetPrevImage();
+    });
+    
+
+}
 
 
 
 
-  const closeBtn = document.querySelector(".close-photo");
-  const fermerphoto = document.getElementById("prev-img")
-  closeBtn.addEventListener("click", function() {
+
+function resetPrevImage() {
     fermerphoto.style.display = "none";
-});
+    image.value = null;
+    closeBtn.style.display = "none";
+    imageVide.style.display = "block";
+    photoUploadButton.style.display = "inherit";
+    typeFiles.style.display = "block";
+}
